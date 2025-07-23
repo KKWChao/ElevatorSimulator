@@ -52,7 +52,7 @@ void Controller::handleButtonPress(int floor) {
             } 
         }
 
-        elevatorPath.push_back(floor);
+        elevatorPath.insert(floor);
         
         // TODO: setting button active
         floorButtons[floor+floorOffset].setPress(true);
@@ -65,28 +65,11 @@ void Controller::handleButtonPress(int floor) {
 }
 
 void Controller::handlePathLogic() {
-    // no need to swap
-    // just use a pointer = currFloor and move along the vector until the list is empty
 
-    // TODO: sort the list first
+    // USING A SET INSTEAD
 
-    // TODO: find the curr floor in the vector
 
-    // TODO: depending on direction move up or down the array while removing items
-    
-    // TODO: once reaching beginning or end, switch directions until vector is empty
     
 
 }
 
-// basic sorting method
-void sortVector() {
-
-}
-
-/* 
-Path logic
-- if statement to check for increasing?
-- or sort the vector based on direction?
-
-*/

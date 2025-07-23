@@ -2,7 +2,7 @@
 #define CONTROLLER_H
 
 #include <vector>
-#include <deque>
+#include <set>
 #include "../buttons/ElevatorButton.h"
 
 class Controller {
@@ -25,7 +25,7 @@ class Controller {
         int getDirection() const { return this->direction; };
         bool getDoorOpen() const { return this->doorStatus; };
         int getCurrentFloor() const { return this->currentFloor; };
-        std::vector<int> getElevatorPath() const { return this->elevatorPath; };
+        std::set<int> getElevatorPath() const { return this->elevatorPath; };
         
     private:
         int lowestFloor;
@@ -35,7 +35,7 @@ class Controller {
         bool doorStatus;
         bool direction;
         std::vector<ElevatorButton> floorButtons;
-        std::vector<int> elevatorPath;
+        std::set<int> elevatorPath;
 };
 
 #endif
