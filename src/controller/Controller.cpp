@@ -13,10 +13,6 @@ Controller::Controller(int lowestFloor, int highestFloor) {
     this->lowestFloor = lowestFloor;
     this->highestFloor = highestFloor;
     this->floorOffset = -lowestFloor;
-
-    for (int i=0; i<=highestFloor+floorOffset; ++i) {
-        floorButtons.push_back(ElevatorButton(i-floorOffset));
-    };
 }
 
 
@@ -26,14 +22,6 @@ void Controller::setCurrentFloor(int currentFloor) {
     if (currentFloor >= lowestFloor && currentFloor <= highestFloor) {
         
         this->currentFloor = currentFloor;
-        
-        // TODO: remove first element in the elevator path
-        elevatorPath.erase(elevatorPath.begin());
-        
-        // TODO: re sort the elevator path
-        handlePathLogic();
-
-        floorButtons[actualFloor].setPress(false);
 
     } else {
         throw std::invalid_argument("Invalid floor");
@@ -45,17 +33,8 @@ void Controller::setCurrentFloor(int currentFloor) {
 
 void Controller::handleButtonPress(int floor) {
     if (floor >= lowestFloor && floor <= highestFloor) {
-        // TODO: need to handle initial press to set direction 
-        if (elevatorPath.empty()) {
-            if (floor < currentFloor) {
-                setDirection(false);
-            } 
-        }
 
         elevatorPath.insert(floor);
-        
-        // TODO: setting button active
-        floorButtons[floor+floorOffset].setPress(true);
 
     } else {
         throw std::invalid_argument("Invalid floor");
@@ -66,10 +45,34 @@ void Controller::handleButtonPress(int floor) {
 
 void Controller::handlePathLogic() {
 
-    // USING A SET INSTEAD
+    // Handling direction change for initial press 
 
+    /* TODO: Figure out how to set elevator path
+    - since we have a set, should it be find the index of the curr floor then iterate up/down?
+    - use an if statement to skip the incorrect floors?
 
+    */
     
+    // example set: {-2, -1, 0, 2, 4, 5, 8} and direction = UP
+    //                       ^ start
+    // want to start at 0 and iterate through until last item of 8 is hit, then switch to down until -2 is reached
+
+    // additionally if additional buttons are added during the path traversal
+    // example set: {-2, -1, 2, 4, 5, 6, 8, 8} and direction = UP
+    //                       ^ start
+    // floors are removed after leaving
+
+}
+
+void Controller::printInfo() const {
+    std::cout << "Current Floor:    " << currentFloor << '\n';
+    std::cout << "Going:            " << direction << std::endl;
+
+    std::cout << "Path: " << '\n';
+    // for (int i : elevatorPath) {
+        
+    // }
+
 
 }
 

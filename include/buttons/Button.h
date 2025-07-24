@@ -5,7 +5,7 @@ class Button {
     public:
         Button();
         
-        virtual void setPress(bool press) = 0;
+        virtual void setPress() = 0;
         virtual void reset(); 
         bool getPress() const { return this->pressed; }
     protected:

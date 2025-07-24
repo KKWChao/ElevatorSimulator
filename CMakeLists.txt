@@ -8,7 +8,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
-add_executable(Project 
-    src/main.cpp
-    src/elevator/Elevator.cpp
+# Gather all source files
+file(GLOB_RECURSE SOURCES
+    src/*.cpp
 )
+
+add_executable(Project ${SOURCES})

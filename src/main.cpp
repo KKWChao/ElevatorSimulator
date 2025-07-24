@@ -11,28 +11,30 @@ int main() {
 
     Elevator elevator;
 
-    try {
-        std::cout << "Enter the lowest floor number: ";
-        std::cin >> lowestFloor;
+    std::cout << "Enter the lowest floor number: ";
+    std::cin >> lowestFloor;
 
-        std::cout << "Enter the highest floor number: ";
-        std::cin >> highestFloor;
-    } catch (std::invalid_argument& exception) {
-        std::cout << "Error: " << exception.what() << '\n';
-    }
+    std::cout << "Enter the highest floor number: ";
+    std::cin >> highestFloor;
 
     elevator.setControlPanel(lowestFloor, highestFloor);
     
-    std::cout << "Enter a floor from " << lowestFloor << " to " << highestFloor << ": " << '\n';
+    std::cout << "Enter destination floor:  (" << lowestFloor << " - " << highestFloor << "): " << '\n';
     std::cin >> userInput;
 
-    while (userInput != 'q') {
-        elevator.setCurrentFloor(userInput);
+    // while (userInput != 'q') {
+    //     elevator.setCurrentFloor(userInput);
+    //     elevator.getControlPanel().getElevatorPath();
         
-        std::cin >> userInput;
-    }
+    //     std::cin >> userInput;
+    // }
 
+    
+    elevator.printInfo();
 
+    elevator.getControlPanel().printInfo();
+
+    std::cout << elevator.getCurrentFloor() << std::endl;
     std::cout << "This is a test"<< '\n';
     
     return 0;

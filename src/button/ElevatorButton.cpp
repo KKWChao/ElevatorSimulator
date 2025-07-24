@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "ElevatorButton.h"
+#include "../include/buttons/ElevatorButton.h"
 
 ElevatorButton::ElevatorButton(int floorNumber) {
     setFloorNumber(floorNumber);
@@ -10,10 +10,10 @@ void ElevatorButton::setFloorNumber(int floorNumber) {
     this->floorNumber = floorNumber;
 }
 
-void ElevatorButton::setPress(bool pressed) {
-    this->pressed = pressed;
+void ElevatorButton::setPress() {
+    pressed = true;
 }
 
-int ElevatorButton::getFloorNumber() const {
-    return floorNumber;
+void ElevatorButton::reset() {
+    pressed = false;
 }

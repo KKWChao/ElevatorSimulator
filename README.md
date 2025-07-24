@@ -58,3 +58,7 @@ practice object-oriented programming (OOP), system design, and interactive conso
     - Team members and their roles
     - Features implemented
     - A short demo video (max 3 minutes) showing the simulation in action.
+
+### Installation Instructions
+
+### Build Instructions

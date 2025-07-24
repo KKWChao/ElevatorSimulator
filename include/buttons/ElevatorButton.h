@@ -1,7 +1,7 @@
 #ifndef ELEVATORBUTTON_H
 #define ELEVATORBUTTON_H
 
-#include "Button.h"
+#include "./Button.h"
 
 class ElevatorButton : public Button {
     public:
@@ -9,7 +9,8 @@ class ElevatorButton : public Button {
         ElevatorButton(int floor);
         
         void setFloorNumber(int floorNumber);
-        void setPress(bool pressed);
+        void setPress();
+        void reset() override;
 
         int getFloorNumber() const { return this->floorNumber; };
     private:
