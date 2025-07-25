@@ -17,6 +17,7 @@ class Elevator {
         void setElevatorButtons(int lowestFloor, int highestFloor);
 
         bool getDoorOpen() const;
+        int getNextFloor();
         int getCurrentFloor() const;
         const Controller& getControlPanel() const;
         ElevatorButton getButton(int floorNumber); 

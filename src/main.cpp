@@ -39,3 +39,5 @@ int main() {
     
     return 0;
 }
+
+// TODO: I/O - change to factory pattern later

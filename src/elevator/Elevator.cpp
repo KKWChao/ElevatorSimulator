@@ -34,6 +34,10 @@ int Elevator::getCurrentFloor() const {
     return this->currentFloor;
 }
 
+int Elevator::getNextFloor() {
+    // TODO: Finish this
+}
+
 const Controller& Elevator::getControlPanel() const {
     if (!controller) {
         throw std::runtime_error("Controller not initialized");
