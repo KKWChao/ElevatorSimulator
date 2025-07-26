@@ -14,10 +14,6 @@ void Elevator::setCurrentFloor(int floorNumber) {
     this->floorNumber=floorNumber;
 };
 
-void Elevator::setControlPanel(int lowestFloor, int highestFloor) {
-    controller = new Controller(lowestFloor, highestFloor);
-};
-
 void Elevator::setElevatorButtons(int lowestFloor, int highestFloor) {
     for (int i=lowestFloor; i<=highestFloor; ++i) {
         elevatorButtons.push_back(ElevatorButton(i));

@@ -3,46 +3,13 @@
 #include <vector>
 #include <string>
 #include "controller/Controller.h"
+#include "elevator/Elevator.h"
 
-
-Controller::Controller(int lowestFloor, int highestFloor) {
-    /*
-        Initializing the buttons based on the lowest and highest
-        number input
-    */
-    this->lowestFloor = lowestFloor;
-    this->highestFloor = highestFloor;
-    this->floorOffset = -lowestFloor;
+void Controller::setElevators(int numElevators) {
+    for (int i = 0; i < numElevators; ++i) {
+        elevators.push_back(Elevator());
+    }
 }
-
-
-void Controller::setCurrentFloor(int currentFloor) {
-    int actualFloor = currentFloor + floorOffset;
-
-    if (currentFloor >= lowestFloor && currentFloor <= highestFloor) {
-        
-        this->currentFloor = currentFloor;
-
-    } else {
-        throw std::invalid_argument("Invalid floor");
-    };
-
-    std::cout << "The current floor is: " << floorButtons[actualFloor].getFloorNumber() << '\n';
-}
-
-
-void Controller::handleButtonPress(int floor) {
-    if (floor >= lowestFloor && floor <= highestFloor) {
-
-        elevatorPath.insert(floor);
-
-    } else {
-        throw std::invalid_argument("Invalid floor");
-    };
-
-    std::cout << "Added floor: " << floor << '\n';
-}
-
 void Controller::handlePathLogic() {
 
     // Handling direction change for initial press 
