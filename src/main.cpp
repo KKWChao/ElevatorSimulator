@@ -6,28 +6,57 @@
 int main() {
     int lowestFloor;
     int highestFloor;
-
     char userInput;
+    std::string direction;
 
     Elevator elevator;
 
-    std::cout << "Enter the lowest floor number: ";
+
+
+    std::cout << "--------------------------------" << std::endl;
+    std::cout << "Enter the lowest floor number:  ";
     std::cin >> lowestFloor;
 
     std::cout << "Enter the highest floor number: ";
     std::cin >> highestFloor;
+    std::cout << "--------------------------------" << std::endl << std::endl;
 
     elevator.setControlPanel(lowestFloor, highestFloor);
+    elevator.setElevatorButtons(lowestFloor, highestFloor);
     
-    std::cout << "Enter destination floor:  (" << lowestFloor << " - " << highestFloor << "): " << '\n';
+    // Query user if they want to press the up or down button to call elevator
+    std::cout << "Going UP or DOWN?: ";
+    std::cin >> direction;
+
+    if (direction == "UP") {
+        
+    } else if (direction == "DOWN") {
+
+    } else {
+        return 0;
+    }
+
+    // Need to create a timer - 5s after entering elevator
+
+
+    std::cout << "Enter destination floor:  (" 
+        << lowestFloor << " - " 
+        << highestFloor << "): " << '\n';
+
     std::cin >> userInput;
 
-    // while (userInput != 'q') {
-    //     elevator.setCurrentFloor(userInput);
-    //     elevator.getControlPanel().getElevatorPath();
+
+    // Activating buttons on the elevator and adding it to the controller 
+    while (userInput != 'q') {
         
-    //     std::cin >> userInput;
-    // }
+        // Set button to active
+
+        // add it to the path
+
+        
+        
+        std::cin >> userInput;
+    }
 
     
     elevator.printInfo();

@@ -16,6 +16,8 @@ class Elevator {
         void setControlPanel(int lowestFloor, int highestFloor);
         void setElevatorButtons(int lowestFloor, int highestFloor);
 
+        int getLowestFloor() const {return lowestFloor;};
+        int getHighestFloor() const {return highestFloor;};
         bool getDoorOpen() const;
         int getNextFloor();
         int getCurrentFloor() const;
@@ -25,6 +27,8 @@ class Elevator {
         void printInfo();
 
     private:
+        int lowestFloor;
+        int highestFloor;
         bool doorOpen;
         int currentFloor;
         int floorNumber;

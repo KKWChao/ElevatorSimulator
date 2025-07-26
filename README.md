@@ -62,3 +62,20 @@ practice object-oriented programming (OOP), system design, and interactive conso
 ### Installation Instructions
 
 ### Build Instructions
+
+```
+// Run the commands in the project directory
+mkdir build && cd build
+cmake ..
+cmake build .
+
+```
+
+### Running the Program
+
+```
+// In the project directory
+cd build
+./Project
+
+```

@@ -19,10 +19,8 @@ void Elevator::setControlPanel(int lowestFloor, int highestFloor) {
 };
 
 void Elevator::setElevatorButtons(int lowestFloor, int highestFloor) {
-    floorOffset = -lowestFloor;
-
-    for (int i=0; i<=highestFloor+floorOffset; ++i) {
-        elevatorButtons.push_back(ElevatorButton(i+floorOffset));
+    for (int i=lowestFloor; i<=highestFloor; ++i) {
+        elevatorButtons.push_back(ElevatorButton(i));
     };
 }
 
@@ -36,6 +34,7 @@ int Elevator::getCurrentFloor() const {
 
 int Elevator::getNextFloor() {
     // TODO: Finish this
+    return 0;
 }
 
 const Controller& Elevator::getControlPanel() const {
@@ -55,10 +54,10 @@ void Elevator::printInfo() {
     std::cout << "Door Status:  " << getDoorOpen() << '\n';
     std::cout << std::endl;
 
-    std::cout << "Active buttons: " << '\n';
+    std::cout << "Inactive buttons: " << '\n';
     for (const ElevatorButton& e : elevatorButtons) {
-        if (e.getPress() == true) {
-            std::cout << e.getFloorNumber() << " " << std::endl;
+        if (!e.getPress()) {
+            std::cout << e.getFloorNumber() << " ";
         }
     }
 }
