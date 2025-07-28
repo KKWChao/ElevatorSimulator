@@ -6,13 +6,18 @@
 class ElevatorButton : public Button {
     public:
         ElevatorButton();
-        ElevatorButton(int floor);
+        ElevatorButton(int floor):floorNumber(floor) {};
         
-        void setFloorNumber(int floorNumber);
-        void setPress();
-        void reset() override;
+        void setPress() {pressed = true;};
+        void reset() override {pressed = false;}; 
 
         int getFloorNumber() const { return this->floorNumber; };
+
+        void printInfo() const override {
+            std::cout << "Elevator Button" << '\n'
+            << "Floor Number: " << getFloorNumber() <<'\n'
+            << "Pressed: "<< getPress() << std::endl;            
+        };
     private:
         int floorNumber;
 };

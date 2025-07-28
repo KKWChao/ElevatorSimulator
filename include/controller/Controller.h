@@ -3,51 +3,79 @@
 
 #include <vector>
 #include <set>
+#include "../common/Base.h"
 #include "../include/buttons/ElevatorButton.h"
 #include "../include/elevator/Elevator.h"
+#include "../include/common/ElevatorDirection.h"
 
-class Controller {
-    enum ElevatorDirection {UP, DOWN, IDLE};
-    
+class Controller : public Base{
+
     public:
         Controller(int lowFloor, int highFloor, int numElevators): 
-            lowestFloor(lowFloor), highestFloor(highFloor), numElevators(numElevators), floorOffset(-lowestFloor) {
+            lowestFloor(lowFloor), 
+            highestFloor(highFloor), 
+            numElevators(numElevators), 
+            floorOffset(-lowestFloor) {
                 setElevators(numElevators);
             };
 
-        ~Controller();
+        void setElevators(int numElevators) {
+            for (int i = 0; i < numElevators; ++i) {
+                elevators.push_back(Elevator(lowestFloor, highestFloor));            // create elevators
+                elevatorPaths.push_back(std::set<int>());   // create elevator paths
+            }
+        };
 
-        // TODO: Convert to holding multiple elevators
-        Elevator getElevator(int elevatorNumber) const { return elevators.at(elevatorNumber);};
-        
-        
-        void setElevators(int numElevators) {};
+        void setElevatorDirection(int whichElevator, ElevatorDirection elevatorDirection) {
+            elevators.at(whichElevator).setDirection(elevatorDirection);
+        };
 
-        void setElevatorDirection(ElevatorDirection elevatorDirection) { this->direction = direction; }; // either true for up or false for down
-        
-        void setDoorOpen(int whichElevator, bool doorStatus) {}; // DEFINE
-        
-        void setCurrentFloor(int whichElevator, int currentFloor);
+        void setElevatorDoorStatus(int whichElevator, bool doorStatus) {
+            elevators.at(whichElevator).setDoorStatus(doorStatus);
+        };
 
-        int getDirection(int whichElevator) const {}; 
+        void setElevatorCurrentFloor(int whichElevator, int floor) {
+            elevators.at(whichElevator).setCurrentFloor(floor);
+        };
 
-        bool getDoorOpen(int whichElevator) const {}; // DEFINE
-        
-        std::set<int> getElevatorPath() const { return this->elevatorPath; };
+        Elevator& getElevator(int elevatorNumber) {
+            return elevators.at(elevatorNumber);
+        };
 
-        void handlePathLogic();
-        void printInfo() const;
+        int getElevatorDirection(int whichElevator) const {
+            return elevators.at(whichElevator).getDirection();
+        }; 
+
+        bool getElevatorDoorStatus(int whichElevator) const {
+            return elevators.at(whichElevator).getDoorStatus();
+        }; 
         
-    private:
+        // Path logic
+        void setElevatorPath(int whichElevator, int floor) {
+            elevatorPaths.at(whichElevator).emplace(floor);
+        }
+
+        std::set<int> getElevatorPath(int whichElevator) const {
+            return elevatorPaths.at(whichElevator);;
+        }
+        std::vector<std::set<int>> getElevatorPaths() const { 
+            return this->elevatorPaths; 
+        };
+
+        void handlePathLogic(int whichElevator); // TODO: FIX THIS
+        void printInfo() const override;
+
+        void handleStart();
+        
+    private:        
         int numElevators;
         int lowestFloor;
         int highestFloor;
-        int currentFloor;
         int floorOffset;
 
         ElevatorDirection direction = IDLE;
         std::vector<Elevator> elevators;
-        std::set<int> elevatorPath;
+        std::vector<std::set<int>> elevatorPaths;
 };
 
 #endif

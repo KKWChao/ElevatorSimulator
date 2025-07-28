@@ -2,39 +2,45 @@
 #define ELEVATOR_H
 
 #include <vector>
+#include "../common/Base.h"
 #include "../buttons/ElevatorButton.h"
-#include "../controller/Controller.h"
+#include "../common/ElevatorDirection.h"
 
-class Elevator {
+class Elevator : public Base{
     public:
-        Elevator();
+        Elevator(int lowestFloor, int highestFloor);
 
-        ~Elevator() = default;
-
-        void setDoorOpen(bool doorOpen);
-        void setCurrentFloor(int floorNumber);
-        void setControlPanel(int lowestFloor, int highestFloor);
-        void setElevatorButtons(int lowestFloor, int highestFloor);
+        void setElevatorButtons(int lowestFloor, int highestFloor) {
+            for (int i=lowestFloor; i<=highestFloor; ++i) {
+                elevatorButtons.push_back(ElevatorButton(i));
+            };
+        };
+        void setDoorStatus(bool doorStatus) {this->doorStatus = doorStatus;};
+        void setCurrentFloor(int floorNumber) {this->floorNumber = floorNumber;};
+        void setDirection(ElevatorDirection direction) {this->direction = direction;};
 
         int getLowestFloor() const {return lowestFloor;};
         int getHighestFloor() const {return highestFloor;};
-        bool getDoorOpen() const;
-        int getNextFloor();
-        int getCurrentFloor() const;
-        const Controller& getControlPanel() const;
-        ElevatorButton getButton(int floorNumber); 
+        bool getDoorStatus() const {return doorStatus;};
+        ElevatorDirection getDirection() const {return direction;};
 
-        void printInfo();
+        int getNextFloor();
+        int getCurrentFloor() const {return currentFloor;};
+        ElevatorButton getButton(int floorNumber) {return elevatorButtons.at(floorNumber+floorOffset);}; 
+
+
+        void handleButtonPress(int floorNumber);
+
+        void printInfo() const override;
 
     private:
         int lowestFloor;
         int highestFloor;
-        bool doorOpen;
+        ElevatorDirection direction;
+        bool doorStatus;
         int currentFloor;
         int floorNumber;
         int floorOffset;
-        
-        Controller* controller;
         std::vector<ElevatorButton> elevatorButtons;
 };
 

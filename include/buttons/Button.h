@@ -1,7 +1,8 @@
 #ifndef BUTTON_H
 #define BUTTON_H
 
-class Button {
+#include "../common/Base.h"
+class Button : public Base {
     public:
         Button();
         
