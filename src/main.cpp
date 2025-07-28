@@ -11,6 +11,7 @@ int main() {
     int highestFloor;
     int numElevators;
     std::string direction;
+    int currentFloor;
     std::string userInput;
     int targetFloor;
     std::string input;
@@ -37,6 +38,9 @@ int main() {
 
     Controller controller(lowestFloor, highestFloor, numElevators);
     
+    std::cout << "Enter your current floor: ";
+    std::cin >> currentFloor;
+
     std::cout << "Going UP or DOWN?: ";
     std::cin >> direction;
 
@@ -55,12 +59,11 @@ int main() {
     // Floor Selection
     std::cout << "Enter destination floor or 'q' to quit:  (" 
         << lowestFloor << " - " 
-        << highestFloor << "): " << '\n';
+        << highestFloor << "): " << std::endl;
 
     
     // string stream for input
     std::cin >> input;
-
 
     // Activating buttons on the elevator and adding it to the controller 
     while (input != "q" && input != "Q") {
@@ -85,6 +88,29 @@ int main() {
         
         std::cin >> input;
     }
+
+ 
+
+
+    // for route testing 
+    if (direction == "UP") {
+        std::cout << "Going UP" << std::endl;
+
+        for (const int floor: controller.getElevatorPath(0)) {
+            if (currentFloor <= floor) {
+                std::cout << floor << " " ;
+            }
+        }
+    } else if (direction == "DOWN") {
+           std::cout << "Going DOWN" << std::endl;
+        for (auto it = controller.getElevatorPath(0).rbegin(); it != controller.getElevatorPath(0).rend(); ++it) {
+            if (currentFloor >= *it) {
+                std::cout << *it << " " ;
+            }
+        }    
+    }
+
+    std::cout << std::endl;
     
     return 0;
 }

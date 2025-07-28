@@ -61,7 +61,7 @@ practice object-oriented programming (OOP), system design, and interactive conso
 
 ### Installation Instructions
 
-### Build Instructions
+#### Build Instructions
 
 ```
 // Run the commands in the project directory
@@ -71,7 +71,7 @@ cmake build .
 
 ```
 
-### Running the Program
+#### Running the Program
 
 ```
 // In the project directory

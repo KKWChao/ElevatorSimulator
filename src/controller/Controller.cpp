@@ -8,28 +8,20 @@
 
 // ELEVATOR MANAGEMENT
 
-void Controller::handlePathLogic(int whichElevator) {
-
-    // Handling direction change for initial press 
-
-    /* 
-    TODO: Figure out how to set elevator path
-    - since we have a set, should it be find the index of the curr floor then iterate up/down?
-    - use an if statement to skip the incorrect floors?
-
-    example set: {-2, -1, 0, 2, 4, 5, 8} and direction = UP
-                          ^ start
-    want to start at 0 and iterate through until last item of 8 is hit, then switch to down until -2 is reached
-
-    additionally if additional buttons are added during the path traversal
-    example set: {-2, -1, 2, 4, 5, 6, 8, 8} and direction = UP
-                          ^ start
-    floors are removed after leaving
-                
-    */
-
-    
-    // elevatorPaths.at(whichElevator);
+void Controller::handlePathLogic(int whichElevator, std::string direction) {
+    if (direction == "UP") {
+        for (std::set<int>::iterator it = getElevatorPath(0).find(getElevator(0).getCurrentFloor()); it != getElevatorPath(0).end(); ++it) {
+            if (getElevator(whichElevator).getCurrentFloor() <= *it) {
+                std::cout << *it << " " ;
+            } 
+        }
+    } else if (direction == "DOWN") {
+        for (std::set<int>::iterator it = getElevatorPath(0).end(); it != getElevatorPath(0).find(getElevator(0).getCurrentFloor()); --it) {
+            if (getElevator(whichElevator).getCurrentFloor() >= *it) {
+                std::cout << *it << " " ;
+            } 
+        }    
+    }
 
 }
 
