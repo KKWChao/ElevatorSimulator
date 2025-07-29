@@ -8,16 +8,22 @@
 
 // ELEVATOR MANAGEMENT
 
+
+
 void Controller::handlePathLogic(int whichElevator, std::string direction) {
+    
+    Elevator targetElevator = getElevator(whichElevator);
+    std::set<int> targetElevatorPath = getElevatorPath(whichElevator);
+
     if (direction == "UP") {
-        for (std::set<int>::iterator it = getElevatorPath(0).find(getElevator(0).getCurrentFloor()); it != getElevatorPath(0).end(); ++it) {
-            if (getElevator(whichElevator).getCurrentFloor() <= *it) {
-                std::cout << *it << " " ;
+        for (int nextFloor : targetElevatorPath) {
+            if (targetElevator.getCurrentFloor() <= nextFloor) {
+                std::cout << nextFloor << " " ;
             } 
         }
     } else if (direction == "DOWN") {
-        for (std::set<int>::iterator it = getElevatorPath(0).end(); it != getElevatorPath(0).find(getElevator(0).getCurrentFloor()); --it) {
-            if (getElevator(whichElevator).getCurrentFloor() >= *it) {
+        for (auto it = targetElevatorPath.rbegin(); it != targetElevatorPath.rend(); ++it) {
+            if (targetElevator.getCurrentFloor() >= *it) {
                 std::cout << *it << " " ;
             } 
         }    

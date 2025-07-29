@@ -10,13 +10,9 @@ Elevator::Elevator(int lowestFloor, int highestFloor):
         setElevatorButtons(lowestFloor, highestFloor);
 }
 
-int Elevator::getNextFloor() {
-    // TODO: Finish this
-    return 0;
-}
-
 void Elevator::handleButtonPress(int floorNumber) {
     elevatorButtons.at(floorNumber + floorOffset).setPress();
+    
 };
 
 void Elevator::printInfo() const {

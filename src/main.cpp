@@ -2,56 +2,26 @@
 #include <string>
 #include <sstream>
 #include <stdexcept>
+#include <chrono>
+#include <thread>
 
+#include "../include/inputoutput/UserInput.h"
 #include "../include/elevator/Elevator.h"
 #include "../include/controller/Controller.h"
 
 int main() {
-    int lowestFloor;
-    int highestFloor;
-    int numElevators;
-    std::string direction;
-    int currentFloor;
-    std::string userInput;
-    int targetFloor;
-    std::string input;
-    int userFloorInput;
+    int lowestFloor, highestFloor, numElevators, currentFloor, targetFloor, userFloorInput;
+    std::string direction, input;
 
-    // Sim setup
-    std::cout << "-----------------------------------" << std::endl;
-    std::cout << "|       ELEVATOR SIM SETUP        |" << std::endl;
-    std::cout << "-----------------------------------" << std::endl;
+    UserInput inputHandler;
 
-    std::cout << "Enter the lowest floor number:    ";
-    std::cin >> lowestFloor;
-    std::cout << std::endl;
-
-    std::cout << "Enter the highest floor number:   ";
-    std::cin >> highestFloor;
-    std::cout << std::endl;
-
-    std::cout << "Enter the number of elevators:    ";
-    std::cin >> numElevators;
-    std::cout << std::endl;
-
-    std::cout << "-----------END OF SETUP-----------" << std::endl << std::endl;
+    inputHandler.elevatorSetup(lowestFloor, highestFloor, numElevators, currentFloor);
 
     Controller controller(lowestFloor, highestFloor, numElevators);
     
-    std::cout << "Enter your current floor: ";
-    std::cin >> currentFloor;
+    inputHandler.getDirection(direction);
 
-    std::cout << "Going UP or DOWN?: ";
-    std::cin >> direction;
 
-    if (direction == "UP") {
-        std::cout << "UP";
-    } else if (direction == "DOWN") {
-        std::cout << "DOWN";  
-    } else {
-        std::cout << "IDLE";
-    }
-    std::cout << std::endl;
 
     // TODO: Need to create a timer - 5s after entering elevator
 
@@ -72,17 +42,13 @@ int main() {
             
             std::cout << "Adding floor " << userFloorInput << " to the path." << std::endl;
 
-            // Set button to active
             controller.getElevator(0).handleButtonPress(userFloorInput);
 
-            // add it to the path
             controller.setElevatorPath(0, userFloorInput);
 
         } catch (std::invalid_argument& e) {
-            std::cout << e.what() << std::endl;
             std::cout << "Invalid input. Please enter a number or 'q' to quit.\n";
         } catch (std::out_of_range& e) {
-            std::cout << e.what() << std::endl;
             std::cout << "Input number is out of range.\n";
         }
         
@@ -90,12 +56,38 @@ int main() {
     }
 
  
-
-
-    // for route testing 
+    // Loop to iterate through the sets depending on direction
     if (direction == "UP") {
-        std::cout << "Going UP" << std::endl;
+        std::cout << "Going UP . . ." << std::endl;
+        
+        // timer start to next floor based on distance
 
+        // use iterator on set to get next floors
+        auto elevatorIterator = controller.getElevatorPath(0).find(currentFloor);
+
+        // begin path 
+        while (elevatorIterator != controller.getElevatorPath(0).end()) {
+
+            // arrive at next floor
+            if (currentFloor != controller.getElevator(0).getCurrentFloor()) {
+
+                std::this_thread::sleep_for(std::chrono::seconds(5));
+
+
+                std::cout << "Arrived at " << currentFloor << std::endl;
+                
+                controller.getElevator(0).setCurrentFloor(*elevatorIterator);
+
+                // pause elevator for additional inputs
+
+
+            }
+
+            elevatorIterator++;
+        }
+
+
+        // convert to while loop to be able to stop at floors
         for (const int floor: controller.getElevatorPath(0)) {
             if (currentFloor <= floor) {
                 std::cout << floor << " " ;
