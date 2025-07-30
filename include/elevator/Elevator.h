@@ -18,13 +18,13 @@ class Elevator : public Base{
         void setDoorStatus(bool doorStatus) {this->doorStatus = doorStatus;};
         void setCurrentFloor(int floorNumber) {this->floorNumber = floorNumber;};
         void setDirection(ElevatorDirection direction) {this->direction = direction;};
+        void setNextFloor(int floorNumber);
 
         int getLowestFloor() const {return lowestFloor;};
         int getHighestFloor() const {return highestFloor;};
         bool getDoorStatus() const {return doorStatus;};
         ElevatorDirection getDirection() const {return direction;};
 
-        int getNextFloor();
         int getCurrentFloor() const {return currentFloor;};
         ElevatorButton getButton(int floorNumber) {return elevatorButtons.at(floorNumber+floorOffset);}; 
 

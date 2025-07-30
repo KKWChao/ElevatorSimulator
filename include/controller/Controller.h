@@ -22,8 +22,8 @@ class Controller : public Base{
         void setElevators(int numElevators) {
 
             for (int i = 0; i < numElevators; ++i) {
-                elevators.emplace_back(lowestFloor, highestFloor);            // create elevators
-                elevatorPaths.emplace_back();   // create elevator paths
+                elevators.emplace_back(lowestFloor, highestFloor);
+                elevatorPaths.emplace_back();
             }
         };
 
@@ -54,16 +54,25 @@ class Controller : public Base{
         // Path logic
         void setElevatorPath(int whichElevator, int floor) {
             elevatorPaths.at(whichElevator).emplace(floor);
-        }
+        };
 
         const std::set<int>& getElevatorPath(int whichElevator) const {
             return elevatorPaths.at(whichElevator);
-        }
+        };
+
+        std::set<int>& getVisitedPath(int whichElevator) {
+            return visitedPaths.at(whichElevator);
+        };
+
         const std::vector<std::set<int>>& getElevatorPaths() const { 
             return this->elevatorPaths; 
         };
 
         void handlePathLogic(int whichElevator, std::string direction); // TODO: FIX THIS
+        // TODO: create a function to remove visited floors from the elevator path
+
+        void updatePathLogic(int whichElevator);
+
         void printInfo() const override;
 
         void handleStart();
@@ -77,6 +86,7 @@ class Controller : public Base{
         ElevatorDirection direction = IDLE;
         std::vector<Elevator> elevators;
         std::vector<std::set<int>> elevatorPaths;
+        std::vector<std::set<int>> visitedPaths;
 };
 
 #endif

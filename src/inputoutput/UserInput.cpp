@@ -34,7 +34,7 @@ int UserInput::getNumElevators() {
 int UserInput::getCurrentFloor() {
     int currentFloor;
     
-    std::cout << "Enter your current floor: ";
+    std::cout << "Enter your current floor:         ";
     std::cin >> currentFloor;
     std::cout << std::endl;
 
@@ -42,7 +42,7 @@ int UserInput::getCurrentFloor() {
 };
 
 void UserInput::getDirection(std::string& direction) {
-    std::cout << "Going UP or DOWN?: ";
+    std::cout << "Going UP or DOWN?:                ";
     std::cin.clear();
     std::cin >> direction;
 
@@ -57,8 +57,46 @@ void UserInput::getDirection(std::string& direction) {
     std::cout << "Calling Elevator ..." << std::endl;
 };
 
+
+void UserInput::floorPrompt(int& lowestFloor, int& highestFloor) {
+    std::cout << "Enter destination floor or 'q' to quit:  (" 
+        << lowestFloor << " - " 
+        << highestFloor << "): " << std::endl;
+}
+
+int UserInput::getElevatorChoice(int numElevators) {
+    int elevator;
+
+    std::cout << "Calling elevators" << std::endl;
+
+    // TODO:    Setup a delay dependent on elevator distance
+    
+    std::cout << "Select Elevator: (1 - " << numElevators << "): "; 
+    
+    std::cin >> elevator;
+
+    return elevator-1;
+}
+
+int UserInput::getFloorInput(int& lowestFloor, int& highestFloor, std::string& input, int& userFloorInput) {
+    try {
+        userFloorInput = std::stoi(input);
+
+        if (userFloorInput < lowestFloor || userFloorInput > highestFloor) {
+            throw std::invalid_argument("Floor input out of range");
+        }
+
+    } catch (std::invalid_argument& e) {
+        std::cout << "Invalid input. Please enter a number or 'q' to quit.\n";
+    } catch (std::out_of_range& e) {
+        std::cout << "Input number is out of range.\n";
+    }
+
+    return userFloorInput;
+}
+
+
 void UserInput::elevatorSetup(int& lowestFloor, int&highestFloor, int& numElevators, int&currentFloor) {
-    // Sim setup
     std::cout << "-----------------------------------" << std::endl;
     std::cout << "|       ELEVATOR SIM SETUP        |" << std::endl;
     std::cout << "-----------------------------------" << std::endl;

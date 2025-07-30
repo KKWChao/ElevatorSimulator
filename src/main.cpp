@@ -9,8 +9,33 @@
 #include "../include/elevator/Elevator.h"
 #include "../include/controller/Controller.h"
 
+void handleElevatorButtonInput(
+    UserInput& inputHandler,
+    Controller& controller, 
+    std::string& input, 
+    int& userFloorInput,
+    int& elevatorChoice,
+    int& lowestFloor, 
+    int& highestFloor) {
+
+    while (input != "q" && input != "Q") {
+
+        userFloorInput = inputHandler.getFloorInput(lowestFloor, highestFloor, input, userFloorInput);
+
+        std::cout << "Elevator button " << userFloorInput << " activated." << std::endl;
+
+        controller.getElevator(elevatorChoice).handleButtonPress(userFloorInput);
+
+        controller.setElevatorPath(elevatorChoice, userFloorInput);
+
+        std::cin >> input;
+    }
+
+}
+
 int main() {
-    int lowestFloor, highestFloor, numElevators, currentFloor, targetFloor, userFloorInput;
+
+    int lowestFloor, highestFloor, numElevators, elevatorChoice, currentFloor, targetFloor, userFloorInput;
     std::string direction, input;
 
     UserInput inputHandler;
@@ -21,74 +46,80 @@ int main() {
     
     inputHandler.getDirection(direction);
 
+    // TODO:    Have elevators start at diffrent floors
+    //          Then have the call get the closest elevator / elevator going in the same direction          
+    elevatorChoice = inputHandler.getElevatorChoice(numElevators);
 
 
-    // TODO: Need to create a timer - 5s after entering elevator
+    // TODO:    Need to create a timer - 5s after entering elevator
 
+    inputHandler.floorPrompt(lowestFloor, highestFloor);
 
-    // Floor Selection
-    std::cout << "Enter destination floor or 'q' to quit:  (" 
-        << lowestFloor << " - " 
-        << highestFloor << "): " << std::endl;
-
-    
-    // string stream for input
     std::cin >> input;
 
-    // Activating buttons on the elevator and adding it to the controller 
-    while (input != "q" && input != "Q") {
-        try {
-            userFloorInput = std::stoi(input);
-            
-            std::cout << "Adding floor " << userFloorInput << " to the path." << std::endl;
+    std::cout << "Elevator Doors Opening . . ." << std::endl;
+    controller.getElevator(elevatorChoice).setDoorStatus(true);                 // Set elevator door to open
 
-            controller.getElevator(0).handleButtonPress(userFloorInput);
+    handleElevatorButtonInput(
+        inputHandler, 
+        controller, 
+        input, 
+        userFloorInput, 
+        elevatorChoice, 
+        lowestFloor, 
+        highestFloor
+    );
+    
+    std::cout << "Elevator Doors Closing . . ." << std::endl;
+    controller.getElevator(elevatorChoice).setDoorStatus(false);                // Closing elevator door
 
-            controller.setElevatorPath(0, userFloorInput);
 
-        } catch (std::invalid_argument& e) {
-            std::cout << "Invalid input. Please enter a number or 'q' to quit.\n";
-        } catch (std::out_of_range& e) {
-            std::cout << "Input number is out of range.\n";
-        }
-        
-        std::cin >> input;
-    }
+    if (direction == "UP") {                                                    // Loop to iterate through the sets depending on direction
 
- 
-    // Loop to iterate through the sets depending on direction
-    if (direction == "UP") {
         std::cout << "Going UP . . ." << std::endl;
+
+        std::this_thread::sleep_for(std::chrono::seconds(1));
         
         // timer start to next floor based on distance
 
         // use iterator on set to get next floors
-        auto elevatorIterator = controller.getElevatorPath(0).find(currentFloor);
+        auto elevatorIterator = controller.getElevatorPath(elevatorChoice).find(currentFloor);
+
+
 
         // begin path 
-        while (elevatorIterator != controller.getElevatorPath(0).end()) {
 
-            // arrive at next floor
-            if (currentFloor != controller.getElevator(0).getCurrentFloor()) {
+        // FIX THIS:    Will need to switch directions once end is reached
+        
+        while (!controller.getElevatorPath(elevatorChoice).empty() ) {
+
+            
+            if (currentFloor != controller.getElevator(elevatorChoice).getCurrentFloor()) { // arrive at next floor
 
                 std::this_thread::sleep_for(std::chrono::seconds(5));
 
 
                 std::cout << "Arrived at " << currentFloor << std::endl;
+
+                std::cout << "Elevator Doors Opening . . ." << std::endl;
+                controller.getElevator(elevatorChoice).setDoorStatus(true);     // Set elevator door to open
                 
-                controller.getElevator(0).setCurrentFloor(*elevatorIterator);
+                controller.getElevator(elevatorChoice).setCurrentFloor(*elevatorIterator);
 
-                // pause elevator for additional inputs
+                controller.getVisitedPath(elevatorChoice).insert(currentFloor);
 
+                // TODO:    Pause elevator for additional inputs
 
+                std::cout << "Elevator Doors Closing . . ." << std::endl;
+                controller.getElevator(elevatorChoice).setDoorStatus(false);    // Closing elevator door
             }
 
             elevatorIterator++;
         }
 
 
-        // convert to while loop to be able to stop at floors
-        for (const int floor: controller.getElevatorPath(0)) {
+        
+        for (const int floor: controller.getElevatorPath(0)) {                  // convert to while loop to be able to stop at floors
             if (currentFloor <= floor) {
                 std::cout << floor << " " ;
             }
@@ -102,7 +133,7 @@ int main() {
         }    
     }
 
-    std::cout << std::endl;
+    std::cout << std::endl << "Elevator Sim Done" << std::endl;
     
     return 0;
 }
