@@ -54,7 +54,7 @@ int main() {
     std::set<int>& targetElevatorPath = controller.getElevatorPath(elevatorChoice);
 
 
-    std::cout << "Elevator Doors Opening . . ." << std::endl;
+    std::cout << ". . . Elevator Doors Opening . . ." << std::endl;
     targetElevator.setDoorStatus(true);                                         // Set elevator door to open
 
 
@@ -74,14 +74,14 @@ int main() {
         highestFloor
     );
     
-    std::cout << "Elevator Doors Closing . . ." << std::endl;
+    std::cout << ". . . Elevator Doors Closing . . ." << std::endl;
     targetElevator.setDoorStatus(false);                                        // Closing elevator door
 
 
 
     if (direction == "UP") {                                                    // Loop to iterate through the sets depending on direction
 
-        std::cout << "Going UP . . ." << std::endl;
+        std::cout << ". . . Going UP . . ." << std::endl;
 
         std::this_thread::sleep_for(std::chrono::seconds(1));
         
@@ -99,38 +99,42 @@ int main() {
                     std::cout << "Elevator moving to up to floor " << floor << std::endl;
                     std::this_thread::sleep_for(std::chrono::seconds(1));
                     targetElevator.setCurrentFloor(floor);
-                }
+                    targetElevator.setDirection(UP);
 
-                std::cout << "Arrived at floor " << floor << std::endl;
-                std::cout << ". . . Elevator Doors Opening . . ." << std::endl;
-                targetElevator.setDoorStatus(true); 
+                    std::cout << "Arrived at floor " << floor << std::endl;
+                    std::cout << ". . . Elevator Doors Opening . . ." << std::endl;
+                    targetElevator.setDoorStatus(true); 
 
-                targetElevatorPath.erase(floor); 
+                    targetElevatorPath.erase(floor); 
 
-                std::cout << "Enter additional Floors? (Y / N)" << std::endl;
-                std::cin >> input;
-
-                if (input == "Y" || input == "y") {
-                    inputHandler.floorPrompt(lowestFloor, highestFloor, 3);
+                    std::cout << "Enter additional Floors? (Y / N)" << std::endl;
                     std::cin >> input;
-                    
-                    handleElevatorButtonInput(
-                        inputHandler, 
-                        controller, 
-                        input, 
-                        userFloorInput, 
-                        elevatorChoice, 
-                        lowestFloor, 
-                        highestFloor
-                    );
+
+                    if (input == "Y" || input == "y") {
+                        inputHandler.floorPrompt(lowestFloor, highestFloor, 3);
+                        std::cin >> input;
+                        
+                        handleElevatorButtonInput(
+                            inputHandler, 
+                            controller, 
+                            input, 
+                            userFloorInput, 
+                            elevatorChoice, 
+                            lowestFloor, 
+                            highestFloor
+                        );
+                    }
+
+                    std::cout << ". . . Elevator Doors Closing . . ." << std::endl;
+                    targetElevator.setDoorStatus(false);                            // Closing elevator door
+                    std::cout << std::endl;
+
+                    break;
                 }
-
-                std::cout << "Elevator Doors Closing . . ." << std::endl;
-                targetElevator.setDoorStatus(false);                            // Closing elevator door
-
-                break;
             }
         }
+
+    // FIX THIS:    Need to hand down direction and switch logic
 
     } else if (direction == "DOWN") {
            std::cout << "Going DOWN" << std::endl;
@@ -139,6 +143,10 @@ int main() {
                 std::cout << *it << " " ;
             }
         }    
+    } else {
+        std::cout << std::endl;
+        std::cout << std::endl << "Elevator is IDLE" << std::endl;
+        std::cout << std::endl;
     }
 
     std::cout << std::endl;
