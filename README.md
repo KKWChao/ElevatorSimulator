@@ -1,20 +1,20 @@
 # Project 1: Elevator Simulation
 
-### Overview
+## Overview
 
 In this project, your team will design and implement a simulation of an elevator system using C++. 
 The simulation should model the behavior of a multi-floor building with one or more elevators, handling 
 user requests, managing elevator movement, and simulating real-time actions. The main goal is to 
 practice object-oriented programming (OOP), system design, and interactive console input/output.
 
-### Requirements
+## Requirements
 
 - Apply object-oriented principles (classes, inheritance, polymorphism).
 - Practice modular design and system decomposition.
 - Implement time-based or event-driven simulations.
 - Strengthen skills in C++ syntax, control flow, and basic file I/O.
 
-### Functional Requirements
+## Functional Requirements
 
 ##### 1. Building Configuration:
 
@@ -59,7 +59,7 @@ practice object-oriented programming (OOP), system design, and interactive conso
     - Features implemented
     - A short demo video (max 3 minutes) showing the simulation in action.
 
-### Installation Instructions
+## Installation Instructions
 
 #### Build Instructions
 

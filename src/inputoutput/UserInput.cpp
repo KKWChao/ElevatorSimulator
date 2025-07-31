@@ -58,10 +58,18 @@ void UserInput::getDirection(std::string& direction) {
 };
 
 
-void UserInput::floorPrompt(int& lowestFloor, int& highestFloor) {
-    std::cout << "Enter destination floor or 'q' to quit:  (" 
-        << lowestFloor << " - " 
-        << highestFloor << "): " << std::endl;
+void UserInput::floorPrompt(int& lowestFloor, int& highestFloor, int floor) {
+    switch (floor) {
+        case 1:
+            break;
+        case 2:
+            break;
+        default:
+            std::cout << "Enter destination floor or 'q' to quit:  (" 
+            << lowestFloor << " - " 
+            << highestFloor << "): " << std::endl;
+            break;
+    }
 }
 
 int UserInput::getElevatorChoice(int numElevators) {

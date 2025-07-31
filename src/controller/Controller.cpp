@@ -31,6 +31,13 @@ void Controller::handlePathLogic(int whichElevator, std::string direction) {
 
 }
 
+void Controller::updatePathLogic(int whichElevator) {
+    std::set<int> targetElevatorPath = getElevatorPath(whichElevator);
+    std::set<int> updatedElevatorPath = getVisitedPath(whichElevator);
+
+    
+};
+
 void Controller::printInfo() const {
     std::cout << "Number of Elevators:  " << numElevators << '\n';
 

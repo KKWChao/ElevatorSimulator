@@ -9,7 +9,7 @@ class UserInput {
         int getCurrentFloor();
         void getDirection(std::string& direction);
 
-        void floorPrompt(int& lowestFloor, int& highestFloor);
+        void floorPrompt(int& lowestFloor, int& highestFloor, int floor);
         int getElevatorChoice(int numElevators);
         int getFloorInput(int& lowestFloor, int& highestFloor, std::string& input, int& userFloorInput);
 

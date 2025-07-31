@@ -56,7 +56,7 @@ class Controller : public Base{
             elevatorPaths.at(whichElevator).emplace(floor);
         };
 
-        const std::set<int>& getElevatorPath(int whichElevator) const {
+        std::set<int>& getElevatorPath(int whichElevator) {
             return elevatorPaths.at(whichElevator);
         };
 
@@ -74,8 +74,6 @@ class Controller : public Base{
         void updatePathLogic(int whichElevator);
 
         void printInfo() const override;
-
-        void handleStart();
         
     private:        
         int numElevators;

@@ -50,15 +50,19 @@ int main() {
     //          Then have the call get the closest elevator / elevator going in the same direction          
     elevatorChoice = inputHandler.getElevatorChoice(numElevators);
 
+    Elevator& targetElevator = controller.getElevator(elevatorChoice);
+    std::set<int>& targetElevatorPath = controller.getElevatorPath(elevatorChoice);
+
+
+    std::cout << "Elevator Doors Opening . . ." << std::endl;
+    targetElevator.setDoorStatus(true);                                         // Set elevator door to open
+
 
     // TODO:    Need to create a timer - 5s after entering elevator
 
-    inputHandler.floorPrompt(lowestFloor, highestFloor);
+    inputHandler.floorPrompt(lowestFloor, highestFloor, 3);
 
     std::cin >> input;
-
-    std::cout << "Elevator Doors Opening . . ." << std::endl;
-    controller.getElevator(elevatorChoice).setDoorStatus(true);                 // Set elevator door to open
 
     handleElevatorButtonInput(
         inputHandler, 
@@ -71,7 +75,8 @@ int main() {
     );
     
     std::cout << "Elevator Doors Closing . . ." << std::endl;
-    controller.getElevator(elevatorChoice).setDoorStatus(false);                // Closing elevator door
+    targetElevator.setDoorStatus(false);                                        // Closing elevator door
+
 
 
     if (direction == "UP") {                                                    // Loop to iterate through the sets depending on direction
@@ -82,48 +87,51 @@ int main() {
         
         // timer start to next floor based on distance
 
-        // use iterator on set to get next floors
-        auto elevatorIterator = controller.getElevatorPath(elevatorChoice).find(currentFloor);
-
-
-
         // begin path 
 
         // FIX THIS:    Will need to switch directions once end is reached
-        
-        while (!controller.getElevatorPath(elevatorChoice).empty() ) {
 
-            
-            if (currentFloor != controller.getElevator(elevatorChoice).getCurrentFloor()) { // arrive at next floor
+        while (!targetElevatorPath.empty()) {
+            int currentFloor = targetElevator.getCurrentFloor();
 
-                std::this_thread::sleep_for(std::chrono::seconds(5));
+            for (int floor : targetElevatorPath) {
+                if (floor > currentFloor) {
+                    std::cout << "Elevator moving to up to floor " << floor << std::endl;
+                    std::this_thread::sleep_for(std::chrono::seconds(1));
+                    targetElevator.setCurrentFloor(floor);
+                }
 
+                std::cout << "Arrived at floor " << floor << std::endl;
+                std::cout << ". . . Elevator Doors Opening . . ." << std::endl;
+                targetElevator.setDoorStatus(true); 
 
-                std::cout << "Arrived at " << currentFloor << std::endl;
+                targetElevatorPath.erase(floor); 
 
-                std::cout << "Elevator Doors Opening . . ." << std::endl;
-                controller.getElevator(elevatorChoice).setDoorStatus(true);     // Set elevator door to open
-                
-                controller.getElevator(elevatorChoice).setCurrentFloor(*elevatorIterator);
+                std::cout << "Enter additional Floors? (Y / N)" << std::endl;
+                std::cin >> input;
 
-                controller.getVisitedPath(elevatorChoice).insert(currentFloor);
-
-                // TODO:    Pause elevator for additional inputs
+                if (input == "Y" || input == "y") {
+                    inputHandler.floorPrompt(lowestFloor, highestFloor, 3);
+                    std::cin >> input;
+                    
+                    handleElevatorButtonInput(
+                        inputHandler, 
+                        controller, 
+                        input, 
+                        userFloorInput, 
+                        elevatorChoice, 
+                        lowestFloor, 
+                        highestFloor
+                    );
+                }
 
                 std::cout << "Elevator Doors Closing . . ." << std::endl;
-                controller.getElevator(elevatorChoice).setDoorStatus(false);    // Closing elevator door
-            }
+                targetElevator.setDoorStatus(false);                            // Closing elevator door
 
-            elevatorIterator++;
-        }
-
-
-        
-        for (const int floor: controller.getElevatorPath(0)) {                  // convert to while loop to be able to stop at floors
-            if (currentFloor <= floor) {
-                std::cout << floor << " " ;
+                break;
             }
         }
+
     } else if (direction == "DOWN") {
            std::cout << "Going DOWN" << std::endl;
         for (auto it = controller.getElevatorPath(0).rbegin(); it != controller.getElevatorPath(0).rend(); ++it) {
@@ -133,9 +141,11 @@ int main() {
         }    
     }
 
-    std::cout << std::endl << "Elevator Sim Done" << std::endl;
-    
+    std::cout << std::endl;
+    std::cout << std::endl << "Elevator Sim Complete" << std::endl;
+    std::cout << std::endl;
+
     return 0;
 }
 
-// TODO: I/O - change to factory pattern later
+// TODO:    I/O - change to factory pattern later
