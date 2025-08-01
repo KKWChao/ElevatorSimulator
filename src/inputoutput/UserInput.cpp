@@ -41,20 +41,23 @@ int UserInput::getCurrentFloor() {
     return currentFloor;
 };
 
-void UserInput::getDirection(std::string& direction) {
-    std::cout << "Going UP or DOWN?:                ";
+ElevatorDirection UserInput::getDirection(std::string& inputDirection) {
+    std::cout << "Going UP or DOWN?: ";
     std::cin.clear();
-    std::cin >> direction;
+    std::cin >> inputDirection;
+    ElevatorDirection direction;
 
-    if (direction == "UP" || direction == "Up" || direction == "up") {
-        direction = "UP";
-    } else if (direction == "DOWN" || direction == "Down" || direction == "down") { 
-        direction = "DOWN";
+    if (inputDirection == "UP" || inputDirection == "Up" || inputDirection == "up") {
+        direction = UP;
+    } else if (inputDirection == "DOWN" || inputDirection == "Down" || inputDirection == "down") { 
+        direction = DOWN;
     } else {
-        direction = "IDLE";
+        direction = IDLE;
     }
 
-    std::cout << "Calling Elevator ..." << std::endl;
+    std::cout << "Calling Elevator . . ." << std::endl;
+
+    return direction;
 };
 
 
@@ -74,8 +77,6 @@ void UserInput::floorPrompt(int& lowestFloor, int& highestFloor, int floor) {
 
 int UserInput::getElevatorChoice(int numElevators) {
     int elevator;
-
-    std::cout << "Calling elevators" << std::endl;
 
     // TODO:    Setup a delay dependent on elevator distance
     
@@ -105,9 +106,9 @@ int UserInput::getFloorInput(int& lowestFloor, int& highestFloor, std::string& i
 
 
 void UserInput::elevatorSetup(int& lowestFloor, int&highestFloor, int& numElevators, int&currentFloor) {
-    std::cout << "-----------------------------------" << std::endl;
-    std::cout << "|       ELEVATOR SIM SETUP        |" << std::endl;
-    std::cout << "-----------------------------------" << std::endl;
+    std::cout << "--------------------------------------------" << std::endl;
+    std::cout << "|           ELEVATOR SIM SETUP             |" << std::endl;
+    // std::cout << "--------------------------------------------" << std::endl;
     std::cout << std::endl;
 
     lowestFloor = getLowestFloor();
@@ -118,9 +119,9 @@ void UserInput::elevatorSetup(int& lowestFloor, int&highestFloor, int& numElevat
 
     currentFloor = getCurrentFloor();
 
-    std::cout << "-----------------------------------" << std::endl;
-    std::cout << "|          END OF SETUP           |" << std::endl;
-    std::cout << "-----------------------------------" << std::endl;
+    // std::cout << "--------------------------------------------" << std::endl;
+    std::cout << "|               END OF SETUP               |" << std::endl;
+    std::cout << "--------------------------------------------" << std::endl;
     
     std::cout << std::endl;
 

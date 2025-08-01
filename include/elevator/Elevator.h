@@ -16,7 +16,7 @@ class Elevator : public Base{
             };
         };
         void setDoorStatus(bool doorStatus) {this->doorStatus = doorStatus;};
-        void setCurrentFloor(int floorNumber) {this->floorNumber = floorNumber;};
+        void setCurrentFloor(int floor) {this->currentFloor = floor;};
         void setDirection(ElevatorDirection direction) {this->direction = direction;};
         void setNextFloor(int floorNumber);
 

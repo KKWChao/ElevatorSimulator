@@ -20,10 +20,10 @@ void Elevator::printInfo() const {
     std::cout << "Door Status:  " << getDoorStatus() << '\n';
     std::cout << std::endl;
 
-    std::cout << "Inactive buttons: " << '\n';
-    // for (const ElevatorButton& e : elevatorButtons) {
-    //     if (!e.getPress()) {
-    //         std::cout << e.getFloorNumber() << " ";
-    //     }
-    // }
+    std::cout << "Active buttons: " << '\n';
+    for (const ElevatorButton& e : elevatorButtons) {
+        if (e.getPress()) {
+            std::cout << e.getFloorNumber() << " ";
+        }
+    }
 }

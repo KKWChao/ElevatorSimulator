@@ -1,13 +1,14 @@
 #ifndef USERINPUT_H
 #define USERINPUT_H
 
+#include "../common/ElevatorDirection.h"
 class UserInput {
     public:
         int getLowestFloor();
         int getHighestFloor();
         int getNumElevators();
         int getCurrentFloor();
-        void getDirection(std::string& direction);
+        ElevatorDirection getDirection(std::string& direction);
 
         void floorPrompt(int& lowestFloor, int& highestFloor, int floor);
         int getElevatorChoice(int numElevators);
