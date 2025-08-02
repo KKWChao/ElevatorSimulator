@@ -71,6 +71,8 @@ class Controller : public Base{
         void handlePathLogic(int whichElevator, std::string direction); // TODO: FIX THIS
         // TODO: create a function to remove visited floors from the elevator path
 
+        void updateElevator(Elevator& targetElevator, int elevatorNumber, int floor, ElevatorDirection direction);
+
         void updatePathLogic(int whichElevator);
 
         void printInfo() const override;

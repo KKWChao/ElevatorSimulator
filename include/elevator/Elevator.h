@@ -23,7 +23,7 @@ class Elevator : public Base{
         int getLowestFloor() const {return lowestFloor;};
         int getHighestFloor() const {return highestFloor;};
         bool getDoorStatus() const {return doorStatus;};
-        ElevatorDirection getDirection() const {return direction;};
+        ElevatorDirection getDirection() const {return this->direction;};
 
         int getCurrentFloor() const {return currentFloor;};
         ElevatorButton getButton(int floorNumber) {return elevatorButtons.at(floorNumber+floorOffset);}; 
@@ -32,6 +32,7 @@ class Elevator : public Base{
         void handleButtonPress(int floorNumber);
 
         void printInfo() const override;
+        void printActiveButtons() const;
 
     private:
         int lowestFloor;

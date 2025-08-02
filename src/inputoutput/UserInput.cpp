@@ -48,11 +48,11 @@ ElevatorDirection UserInput::getDirection(std::string& inputDirection) {
     ElevatorDirection direction;
 
     if (inputDirection == "UP" || inputDirection == "Up" || inputDirection == "up") {
-        direction = UP;
+        direction = ElevatorDirection::UP;
     } else if (inputDirection == "DOWN" || inputDirection == "Down" || inputDirection == "down") { 
-        direction = DOWN;
+        direction = ElevatorDirection::DOWN;
     } else {
-        direction = IDLE;
+        direction = ElevatorDirection::IDLE;
     }
 
     std::cout << "Calling Elevator . . ." << std::endl;
@@ -60,7 +60,7 @@ ElevatorDirection UserInput::getDirection(std::string& inputDirection) {
     return direction;
 };
 
-
+// TODO:    add additional choices 
 void UserInput::floorPrompt(int& lowestFloor, int& highestFloor, int floor) {
     switch (floor) {
         case 1:
@@ -108,18 +108,15 @@ int UserInput::getFloorInput(int& lowestFloor, int& highestFloor, std::string& i
 void UserInput::elevatorSetup(int& lowestFloor, int&highestFloor, int& numElevators, int&currentFloor) {
     std::cout << "--------------------------------------------" << std::endl;
     std::cout << "|           ELEVATOR SIM SETUP             |" << std::endl;
-    // std::cout << "--------------------------------------------" << std::endl;
     std::cout << std::endl;
 
     lowestFloor = getLowestFloor();
 
     highestFloor = getHighestFloor();
 
-    numElevators = getNumElevators();
-
     currentFloor = getCurrentFloor();
 
-    // std::cout << "--------------------------------------------" << std::endl;
+    numElevators = getNumElevators();
     std::cout << "|               END OF SETUP               |" << std::endl;
     std::cout << "--------------------------------------------" << std::endl;
     
