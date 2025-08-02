@@ -27,6 +27,23 @@ The program simulates an elevator system where users can interactively call elev
 
 - Simulates delays and door open/close behavior.
 
+## Issues / TODO
+- Issue with direction printing multiple times or incorrectly 
+
+- refactoring is need due to repeated lines
+
+- compartmentalization of functions and methods 
+
+- UI needs work
+
+- Timer was supposed to set up 
+
+- Cleaning up unused methods and functions in classes
+
+- Not enough time to work on other floors
+
+- wanted to have elevators spawn on random floors
+
 ## Installation Instructions
 
 #### Prerequisites
